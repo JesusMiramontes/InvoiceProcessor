@@ -14,22 +14,30 @@ namespace ProcesarFacturasXml
     public partial class Form1 : Form
     {
         // Lista que almacena las facturas importadas
-        IList<Factura> facturas = new List<Factura>();
+        static IList<Factura> facturas = new List<Factura>();
 
         public Form1()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Recibe el path de un archivo xml, lo procesa, convierte a factura, y lo agrega a la lista de facturas
+        /// </summary>
+        /// <param name="file_path">Ruta del archivo a procesar</param>
+        static void agregarArchivoALista(string file_path) {
+            //Crea una factura f con la factura que recibe del xml
+            Factura f = Factura.readFromXmlFile(file_path);
+
+            //Agrega la factura f a la lista "facturas"
+            facturas.Add(f);
+        }
+
         private void btnAbrir_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                //Crea una factura f con la factura que recibe del xml
-                Factura f = Factura.readFromXmlFile(openFileDialog1.FileName);
-
-                //Agrega la factura f a la lista "facturas"
-                facturas.Add(f);
+                agregarArchivoALista(openFileDialog1.FileName);
             }
 
             //Establece la lista facturas como el origen del dgv
@@ -42,16 +50,12 @@ namespace ProcesarFacturasXml
             {
                 foreach (string file in Directory.EnumerateFiles(folderBrowserDialog1.SelectedPath, "*.xml"))
                 {
-                    //Crea una factura f con la factura que recibe del xml
-                    Factura f = Factura.readFromXmlFile(file); //*****Código repetido, solucionar*****
-
-                    //Agrega la factura f a la lista "facturas"
-                    facturas.Add(f); //*****Código repetido, solucionar*****
+                    agregarArchivoALista(file);
                 }
             }
 
             //Establece la lista facturas como el origen del dgv
-            dgvFacturas.DataSource = facturas; //*****Código repetido, solucionar*****
+            dgvFacturas.DataSource = facturas;
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)

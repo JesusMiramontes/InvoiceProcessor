@@ -6,4 +6,3 @@ c:\users\jesus miramontes\documents\visual studio 2017\Projects\ProcesarFacturas
 c:\users\jesus miramontes\documents\visual studio 2017\Projects\ProcesarFacturasXml\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.csproj.GenerateResource.Cache
 c:\users\jesus miramontes\documents\visual studio 2017\Projects\ProcesarFacturasXml\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.exe
 c:\users\jesus miramontes\documents\visual studio 2017\Projects\ProcesarFacturasXml\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.pdb
-C:\Users\Jesus Miramontes\documents\visual studio 2017\Projects\ProcesarFacturasXml\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.csprojResolveAssemblyReference.cache
