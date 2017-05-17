@@ -107,9 +107,19 @@ namespace ProcesarFacturasXml
             return output;
         }
 
+        /// <summary>
+        /// Metodo que exporta la lista de facturas a un archivo de texto
+        /// </summary>
+        /// <param name="facturas">Lista de facturas importadas</param>
+        /// <param name="file_path">Ruta donde se guardará el archivo</param>
         public static void exportarAArchivo(string facturas, string file_path) {
+            // Crea un objeto StreamWriter y le asigna la ruta recibida
             System.IO.StreamWriter writer = new System.IO.StreamWriter(file_path);
+
+            //Escribe en el writer la cadena de facturas recibida
             writer.WriteLine(facturas);
+
+            // Cierra el flujo del writer
             writer.Close();
         }
 

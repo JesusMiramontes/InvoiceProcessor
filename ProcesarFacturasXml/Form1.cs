@@ -53,5 +53,14 @@ namespace ProcesarFacturasXml
             //Establece la lista facturas como el origen del dgv
             dgvFacturas.DataSource = facturas; //*****Código repetido, solucionar*****
         }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                // Exporta la lista de factuas a un archivo de texto en la ruta establecida con el save file dialog
+                Factura.exportarAArchivo(Factura.listaACsv(facturas), saveFileDialog1.FileName);
+            }
+        }
     }
 }
