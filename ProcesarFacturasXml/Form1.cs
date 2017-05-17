@@ -19,6 +19,10 @@ namespace ProcesarFacturasXml
         public Form1()
         {
             InitializeComponent();
+            //string s = Archivos.obtenerFileName("c:\\users\\jesus miramontes\\documents\\visual studio 2017\\Projects\\ProcesarFacturasXml\\ProcesarFacturasXml\\Resources\\file.xml");
+            Archivos.agregarPdfs("C:\\Users\\Jesus Miramontes\\Desktop\\fact");
+            Archivos.agregarXmls("C:\\Users\\Jesus Miramontes\\Desktop\\fact");
+            Archivos.compararListas(Archivos.pdfs, Archivos.xmls);
         }
 
         /// <summary>
