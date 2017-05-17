@@ -32,9 +32,6 @@
             this.btnAbrir = new System.Windows.Forms.Button();
             this.dgvFacturas = new System.Windows.Forms.DataGridView();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.dgvFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvEmisor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvTotal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.label2 = new System.Windows.Forms.Label();
             this.btnSeleccionarCarpeta = new System.Windows.Forms.Button();
@@ -64,10 +61,6 @@
             // 
             this.dgvFacturas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvFacturas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFacturas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dgvFecha,
-            this.dgvEmisor,
-            this.dgvTotal});
             this.dgvFacturas.Location = new System.Drawing.Point(3, 29);
             this.dgvFacturas.Name = "dgvFacturas";
             this.dgvFacturas.Size = new System.Drawing.Size(497, 169);
@@ -77,24 +70,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "Archivos xml|*.xml";
-            // 
-            // dgvFecha
-            // 
-            this.dgvFecha.HeaderText = "Fecha";
-            this.dgvFecha.Name = "dgvFecha";
-            this.dgvFecha.Width = 62;
-            // 
-            // dgvEmisor
-            // 
-            this.dgvEmisor.HeaderText = "Emisor";
-            this.dgvEmisor.Name = "dgvEmisor";
-            this.dgvEmisor.Width = 63;
-            // 
-            // dgvTotal
-            // 
-            this.dgvTotal.HeaderText = "Total";
-            this.dgvTotal.Name = "dgvTotal";
-            this.dgvTotal.Width = 56;
             // 
             // label2
             // 
@@ -139,9 +114,6 @@
         private System.Windows.Forms.Button btnAbrir;
         private System.Windows.Forms.DataGridView dgvFacturas;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvFecha;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvEmisor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgvTotal;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSeleccionarCarpeta;

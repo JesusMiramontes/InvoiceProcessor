@@ -13,6 +13,8 @@ namespace ProcesarFacturasXml
 {
     public partial class Form1 : Form
     {
+        IList<Factura> facturas = new List<Factura>();
+
         public Form1()
         {
             InitializeComponent();
@@ -22,9 +24,15 @@ namespace ProcesarFacturasXml
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                //Crea una factura f con la factura que recibe del xml
                 Factura f = Factura.readFromXmlFile(openFileDialog1.FileName);
-                dgvFacturas.Rows.Add(f.fecha, f.emisor, f.total);
+
+                //Agrega la factura f a la lista "facturas"
+                facturas.Add(f);
             }
+
+            //Establece la lista facturas como el origen del dgv
+            dgvFacturas.DataSource = facturas;
         }
 
         private void btnSeleccionarCarpeta_Click(object sender, EventArgs e)
@@ -33,10 +41,16 @@ namespace ProcesarFacturasXml
             {
                 foreach (string file in Directory.EnumerateFiles(folderBrowserDialog1.SelectedPath, "*.xml"))
                 {
-                    Factura f = Factura.readFromXmlFile(file);
-                    dgvFacturas.Rows.Add(f.fecha, f.emisor, f.total);
+                    //Crea una factura f con la factura que recibe del xml
+                    Factura f = Factura.readFromXmlFile(file); //*****Código repetido, solucionar*****
+
+                    //Agrega la factura f a la lista "facturas"
+                    facturas.Add(f); //*****Código repetido, solucionar*****
                 }
             }
+
+            //Establece la lista facturas como el origen del dgv
+            dgvFacturas.DataSource = facturas; //*****Código repetido, solucionar*****
         }
     }
 }
