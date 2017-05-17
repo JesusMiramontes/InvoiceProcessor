@@ -31,7 +31,7 @@ namespace ProcesarFacturasXml
         public Factura(string t, string e, string f) {
             total = t;
             emisor = e;
-            fecha = f;
+            fecha = formatoFecha(f);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace ProcesarFacturasXml
                 {
                     if (reader.HasAttributes) {
                         f.total = reader.GetAttribute("total");
-                        f.fecha = reader.GetAttribute("fecha");
+                        f.fecha = formatoFecha(reader.GetAttribute("fecha"));
                     }
                     else
                         throw new Exception("No ha sido posible procesar la información.");
@@ -123,5 +123,9 @@ namespace ProcesarFacturasXml
             writer.Close();
         }
 
+        public static string formatoFecha(string f) {
+            DateTime date = DateTime.Parse(f);
+            return String.Format("{0:dd/MM/yy}", date);
+        }
     }
 }
