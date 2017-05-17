@@ -33,15 +33,30 @@ namespace ProcesarFacturasXml
             facturas.Add(f);
         }
 
+        /// <summary>
+        /// Actualiza el origen del datagridview
+        /// </summary>
+        /// <param name="dgv">Datagridview al que se le asignará el origen</param>
+        /// <param name="lista">Lista con las facturas</param>
+        static void establecerOrigenDgv(DataGridView dgv, IList<Factura> lista) {
+            // Establece el origen a null
+            dgv.DataSource = null;
+
+            //Establece la lista facturas como el origen del dgv
+            dgv.DataSource = facturas;
+        }
+
+        static void copiarAPortapapeles(string s) {
+            Clipboard.SetText(s);
+        }
+
         private void btnAbrir_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 agregarArchivoALista(openFileDialog1.FileName);
+                establecerOrigenDgv(dgvFacturas, facturas);
             }
-
-            //Establece la lista facturas como el origen del dgv
-            dgvFacturas.DataSource = facturas;
         }
 
         private void btnSeleccionarCarpeta_Click(object sender, EventArgs e)
@@ -52,10 +67,8 @@ namespace ProcesarFacturasXml
                 {
                     agregarArchivoALista(file);
                 }
+                establecerOrigenDgv(dgvFacturas, facturas);
             }
-
-            //Establece la lista facturas como el origen del dgv
-            dgvFacturas.DataSource = facturas;
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -65,6 +78,12 @@ namespace ProcesarFacturasXml
                 // Exporta la lista de factuas a un archivo de texto en la ruta establecida con el save file dialog
                 Factura.exportarAArchivo(Factura.listaACsv(facturas), saveFileDialog1.FileName);
             }
+        }
+
+        private void btnCopiar_Click(object sender, EventArgs e)
+        {
+            // Copia las facturas en csv al portapapeles
+            copiarAPortapapeles(Factura.listaACsv(facturas));
         }
     }
 }
