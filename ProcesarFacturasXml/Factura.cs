@@ -83,7 +83,7 @@ namespace ProcesarFacturasXml
         /// <returns>string separado por comas</returns>
         public string aCsv() {
             //Cadena interpolada que separa los atributos de la factura con ','
-            return $"{fecha},{emisor},{total}";
+            return $"{fecha};{emisor};{total}";
         }
 
 
