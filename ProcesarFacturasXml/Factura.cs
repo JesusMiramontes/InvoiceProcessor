@@ -10,6 +10,7 @@ namespace ProcesarFacturasXml
 {
     class Factura
     {
+
         public string total { get; set; }
         public string emisor { get; set; }
         public string fecha { get; set; }
@@ -75,5 +76,42 @@ namespace ProcesarFacturasXml
             //Regresa el objeto factura con los atributos encontrados
             return f;
         }
+
+        /// <summary>
+        /// Metodo que convierte los valores de una factura en csv
+        /// </summary>
+        /// <returns>string separado por comas</returns>
+        public string aCsv() {
+            //Cadena interpolada que separa los atributos de la factura con ','
+            return $"{fecha},{emisor},{total}";
+        }
+
+
+        /// <summary>
+        /// Método que recibe una lista y regresa un string para guardarse en texto csv
+        /// </summary>
+        /// <param name="lista">Lista de facturas</param>
+        /// <returns>string con propiedades de cada factura separada por comas, cada factura separada con \n</returns>
+        public static string listaACsv(IList<Factura> lista) {
+            // Cadena donde se almacenarán las facturas
+            string output = "";
+
+            // Recorre toda la lista
+            foreach (var f in lista) {
+                // Agrega al output la factura separada por comas que recibe del método aCsv()
+                output += f.aCsv();
+
+                // Agrega un salto de linea entre cada factura
+                output += "\r\n";
+            }
+            return output;
+        }
+
+        public static void exportarAArchivo(string facturas, string file_path) {
+            System.IO.StreamWriter writer = new System.IO.StreamWriter(file_path);
+            writer.WriteLine(facturas);
+            writer.Close();
+        }
+
     }
 }

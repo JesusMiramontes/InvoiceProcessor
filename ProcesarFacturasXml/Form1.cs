@@ -13,6 +13,7 @@ namespace ProcesarFacturasXml
 {
     public partial class Form1 : Form
     {
+        // Lista que almacena las facturas importadas
         IList<Factura> facturas = new List<Factura>();
 
         public Form1()
