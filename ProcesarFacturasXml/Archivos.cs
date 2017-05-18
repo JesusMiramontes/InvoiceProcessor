@@ -4,44 +4,86 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ProcesarFacturasXml
 {
     class Archivos
     {
-        public static IList<string> pdfs = new List<string>();
-        public static IList<string> xmls = new List<string>();
-        public static IList<string> coinciden = new List<string>();
+        // Lista con los pdf encontrados
+        public IList<string> pdfs;
 
-        public static void agregarPdfs(string folder_path) {
-            foreach (string file in Directory.EnumerateFiles(folder_path, "*.pdf"))
+        // Lista con los xmls encontrados
+        public IList<string> xmls;
+
+        // Lista con los archivos que existen en ambas listas
+        public IList<string> coinciden;
+
+        // Ruta de la carpeta sobre la que se buscarán archivos y analizarán
+        public string folder_path;
+
+        // Extensiones a buscar
+        private string[] extensiones = { ".xml", ".pdf" };
+
+        /// <summary>
+        /// Constructor que inicializa en nil
+        /// </summary>
+        public Archivos() {
+            pdfs = new List<string>();
+            xmls = new List<string>();
+            coinciden = new List<string>();
+            folder_path = "nil";
+        }
+
+        /// <summary>
+        /// Constructor que recibe la ruta del folder
+        /// </summary>
+        /// <param name="path">Carpeta a analizar</param>
+        public Archivos(string path) {
+            pdfs = new List<string>();
+            xmls = new List<string>();
+            coinciden = new List<string>();
+            folder_path = path;
+        }
+
+        /// <summary>
+        /// Busca en la carpeta todos los archivos .pdf y los agrega a la lista
+        /// </summary>
+        private void cargarArchivos() {
+
+            // Repite la operación con los archivos .pdf y .xml
+            for (int i = 0; i < extensiones.Length; i++)
             {
-                pdfs.Add(file);
+                // Recorre todos los archivos de la carpeta con la extensión correspondiente
+                foreach (string file in Directory.EnumerateFiles(folder_path, "*" + extensiones[i]))
+                {
+                    // Si el archivo tiene la extensión buscada lo agrega a la lista correspondiente
+                    if (extensiones[i] == ".pdf")
+                    {
+                        pdfs.Add(System.IO.Path.GetFileNameWithoutExtension(file));
+                    }
+                    else if (extensiones[i] == ".xml")
+                    {
+                        xmls.Add(System.IO.Path.GetFileNameWithoutExtension(file));
+                    }
+                } 
             }
         }
 
-        public static void agregarXmls(string folder_path)
-        {
-            foreach (string file in Directory.EnumerateFiles(folder_path, "*.xml"))
-            {
-                xmls.Add(file);
-            }
-        }
+        /// <summary>
+        /// Compara ambas lista en busca de archivos que existan en ambos formatos
+        /// </summary>
+        private void compararListas() {
 
-        public static string obtenerFileName(string full_path) {
-            return System.IO.Path.GetFileNameWithoutExtension(full_path);
-        }
+            // Toma como límite el tamaño de la lista mas grande
+            //int limite = (pdfs.Count >= xmls.Count) ? pdfs.Count : xmls.Count;
 
-        public static void compararListas(IList<string> pdfs, IList<string> xmls) {
-            int limite = (pdfs.Count >= xmls.Count) ? pdfs.Count : xmls.Count;
-
-            for (int i = 0; i < limite; i++)
-            {
+            // Recorre la lista mas grande y la compara con la mas chica, si coincide en ambas listas la agrega a la correspondiente
                 if (pdfs.Count > xmls.Count)
                 {
                     foreach (var item in pdfs)
                     {
-                        if (xmls.Contains(item.Replace(".pdf", ".xml")))
+                        if (xmls.Contains(item))
                         {
                             coinciden.Add(item);
                         }
@@ -51,13 +93,68 @@ namespace ProcesarFacturasXml
                 {
                     foreach (var item in xmls)
                     {
-                        if (pdfs.Contains(obtenerFileName(item) + ".pdf"))
+                        if (xmls.Contains(item))
                         {
                             coinciden.Add(item);
                         }
                     }
                 }   
-            }
+            
         }
+
+        /// <summary>
+        /// Mueve los archivos pdf y xml a sus respectivas subcarpetas
+        /// </summary>
+        private void moverCoinciden() {
+
+            foreach (var file in coinciden)
+            {
+                // Ruta a donde se moverá el archivo
+                string target_path = System.IO.Path.Combine(folder_path, file);
+                string[] extensiones = { ".xml", ".pdf" };
+
+                //Crea las carpetas con los nombres de los archivos que coinciden en caso de no existir ya
+                if (!System.IO.Directory.Exists(target_path))
+                {
+                    System.IO.Directory.CreateDirectory(target_path);
+                }
+
+                // Realiza la operacíon con cada extensión
+                for (int i = 0; i < extensiones.Length ; i++)
+                {
+                    // Concatena la ruta del la carpeta, el nombre del archivo y la extensión
+                    string from_location = string.Format("{0}\\{1}{2}", folder_path, file, extensiones[i]);
+
+                    // Concatena la ruta de la carpeta, el nombre de la subcarpeta, el nombre del archivo, y la extensión
+                    string to_location = string.Format("{0}\\{1}\\{2}{3}", folder_path, file, file, extensiones[i]);
+
+                    try
+                    {
+                        // Mueve el archivo de la ruta padre a la subcarpeta
+                        System.IO.File.Move(from_location, to_location);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    } 
+
+                }
+
+            }
+
+        }
+
+        /// <summary>
+        /// Analiza los archivos, crea las carpetas, y mueve los .xml y.pdf
+        /// </summary>
+        public void ejecutar() {
+            MessageBox.Show("Cargando archivos");
+            cargarArchivos();
+            MessageBox.Show("Comparando listas");
+            compararListas();
+            MessageBox.Show("Moviendo coinciden");
+            moverCoinciden();
+        }
+
     }
 }
