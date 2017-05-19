@@ -19,9 +19,9 @@ namespace ProcesarFacturasXml
         public Form1()
         {
             InitializeComponent();
-            //string s = Archivos.obtenerFileName("c:\\users\\jesus miramontes\\documents\\visual studio 2017\\Projects\\ProcesarFacturasXml\\ProcesarFacturasXml\\Resources\\file.xml");
-            Archivos a = new Archivos("C:\\Users\\Jesus Miramontes\\Desktop\\fact");
-            a.ejecutar();
+            //string s = Archivos.obtenerFileName("c:\\users\\jesus miramontes\\documents\\visual studio 2017\\Projects\\ProcesarFacturasXml\\ProcesarFacturasXml\\Resources\\file.xml
+            //Archivos a = new Archivos("C:\\Users\\Jesus Miramontes\\Desktop\\fact");
+            //a.ejecutar();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace ProcesarFacturasXml
             dgv.DataSource = null;
 
             //Establece la lista facturas como el origen del dgv
-            dgv.DataSource = facturas;
+            dgv.DataSource = lista;
         }
 
         static void copiarAPortapapeles(string s) {
@@ -64,14 +64,18 @@ namespace ProcesarFacturasXml
 
         private void btnSeleccionarCarpeta_Click(object sender, EventArgs e)
         {
+            facturas = new List<Factura>();
+            Archivos a = new Archivos();
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                foreach (string file in Directory.EnumerateFiles(folderBrowserDialog1.SelectedPath, "*.xml"))
-                {
-                    agregarArchivoALista(file);
-                }
-                establecerOrigenDgv(dgvFacturas, facturas);
+                a = new Archivos(folderBrowserDialog1.SelectedPath);
             }
+            folderBrowserDialog1.Reset();
+            folderBrowserDialog1.Dispose();
+            a.ejecutar();
+
+            facturas = a.getXmlsAsfacturas();
+            establecerOrigenDgv(dgvFacturas, a.facturas_xmls);
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -87,6 +91,11 @@ namespace ProcesarFacturasXml
         {
             // Copia las facturas en csv al portapapeles
             copiarAPortapapeles(Factura.listaACsv(facturas));
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -11,19 +11,21 @@ namespace ProcesarFacturasXml
     class Archivos
     {
         // Lista con los pdf encontrados
-        public IList<string> pdfs;
+        private IList<string> pdfs;
 
         // Lista con los xmls encontrados
-        public IList<string> xmls;
+        private IList<string> xmls;
 
         // Lista con los archivos que existen en ambas listas
-        public IList<string> coinciden;
+        private IList<string> coinciden;
 
         // Ruta de la carpeta sobre la que se buscarán archivos y analizarán
-        public string folder_path;
+        private string folder_path;
 
         // Extensiones a buscar
         private string[] extensiones = { ".xml", ".pdf" };
+
+        public IList<Factura> facturas_xmls;
 
         /// <summary>
         /// Constructor que inicializa en nil
@@ -33,6 +35,7 @@ namespace ProcesarFacturasXml
             xmls = new List<string>();
             coinciden = new List<string>();
             folder_path = "nil";
+            facturas_xmls = new List<Factura>();
         }
 
         /// <summary>
@@ -44,6 +47,7 @@ namespace ProcesarFacturasXml
             xmls = new List<string>();
             coinciden = new List<string>();
             folder_path = path;
+            facturas_xmls = new List<Factura>();
         }
 
         /// <summary>
@@ -65,6 +69,7 @@ namespace ProcesarFacturasXml
                     else if (extensiones[i] == ".xml")
                     {
                         xmls.Add(System.IO.Path.GetFileNameWithoutExtension(file));
+                        facturas_xmls.Add(Factura.readFromXmlFile(file));
                     }
                 } 
             }
@@ -119,41 +124,54 @@ namespace ProcesarFacturasXml
                     System.IO.Directory.CreateDirectory(target_path);
                 }
 
+            }
+            
+            foreach (var file in coinciden)
+            {
                 // Realiza la operacíon con cada extensión
-                for (int i = 0; i < extensiones.Length ; i++)
+                for (int i = 0; i < extensiones.Length; i++)
                 {
                     // Concatena la ruta del la carpeta, el nombre del archivo y la extensión
                     string from_location = string.Format("{0}\\{1}{2}", folder_path, file, extensiones[i]);
-
+            
                     // Concatena la ruta de la carpeta, el nombre de la subcarpeta, el nombre del archivo, y la extensión
                     string to_location = string.Format("{0}\\{1}\\{2}{3}", folder_path, file, file, extensiones[i]);
 
+                    //System.Threading.Thread.Sleep(1000);
                     try
                     {
                         // Mueve el archivo de la ruta padre a la subcarpeta
+                        //System.Threading.Thread.Sleep(3000);
                         System.IO.File.Move(from_location, to_location);
                     }
                     catch (Exception ex)
                     {
-                        throw ex;
-                    } 
-
+                        MessageBox.Show(ex.Message);//throw ex;
+                    }
+            
                 }
-
             }
-
         }
 
         /// <summary>
         /// Analiza los archivos, crea las carpetas, y mueve los .xml y.pdf
         /// </summary>
         public void ejecutar() {
-            MessageBox.Show("Cargando archivos");
+            //System.Threading.Thread.Sleep(3000);
+            //MessageBox.Show("Cargando archivos");
             cargarArchivos();
-            MessageBox.Show("Comparando listas");
+
+            //System.Threading.Thread.Sleep(3000);
+            //MessageBox.Show("Comparando listas");
             compararListas();
-            MessageBox.Show("Moviendo coinciden");
+
+            //System.Threading.Thread.Sleep(3000);
+            //MessageBox.Show("Moviendo coinciden");
             moverCoinciden();
+        }
+
+        public IList<Factura> getXmlsAsfacturas() {
+            return facturas_xmls;
         }
 
     }

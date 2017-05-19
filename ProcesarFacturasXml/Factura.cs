@@ -73,6 +73,8 @@ namespace ProcesarFacturasXml
 
             }
 
+            reader.Close();
+
             //Regresa el objeto factura con los atributos encontrados
             return f;
         }
