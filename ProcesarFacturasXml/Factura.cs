@@ -10,7 +10,6 @@ namespace ProcesarFacturasXml
 {
     class Factura
     {
-
         public string total { get; set; }
         public string emisor { get; set; }
         public string fecha { get; set; }

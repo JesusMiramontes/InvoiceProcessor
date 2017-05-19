@@ -19,9 +19,6 @@ namespace ProcesarFacturasXml
         public Form1()
         {
             InitializeComponent();
-            //string s = Archivos.obtenerFileName("c:\\users\\jesus miramontes\\documents\\visual studio 2017\\Projects\\ProcesarFacturasXml\\ProcesarFacturasXml\\Resources\\file.xml
-            //Archivos a = new Archivos("C:\\Users\\Jesus Miramontes\\Desktop\\fact");
-            //a.ejecutar();
         }
 
         /// <summary>
@@ -49,12 +46,22 @@ namespace ProcesarFacturasXml
             dgv.DataSource = lista;
         }
 
+        /// <summary>
+        /// Copia el contenido que reciba al portapapeles
+        /// </summary>
+        /// <param name="s"> texto a almacenar en portapapeles</param>
         static void copiarAPortapapeles(string s) {
             Clipboard.SetText(s);
         }
 
+        /// <summary>
+        /// Metodo que se ejecuta al importar un solo archivo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAbrir_Click(object sender, EventArgs e)
         {
+            // Muesta el dialogo y si se eligue un archivo lo agrega a la lista y actualiza el dgv
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 agregarArchivoALista(openFileDialog1.FileName);
@@ -62,20 +69,38 @@ namespace ProcesarFacturasXml
             }
         }
 
+        /// <summary>
+        /// Se ejecuta al presionar boton para analizar carpeta
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSeleccionarCarpeta_Click(object sender, EventArgs e)
         {
+            // Crea un nuevo objeto lista
             facturas = new List<Factura>();
+
+            // Crea un objeto de archivos
             Archivos a = new Archivos();
+
+            // Se muestra el dialogo y compara la selección del usuario
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
+                // Al objeto a le asigna la ruta de la carpeta seleccionada
                 a = new Archivos(folderBrowserDialog1.SelectedPath);
             }
+
+            // Restablece la configuración del dialogo
             folderBrowserDialog1.Reset();
             folderBrowserDialog1.Dispose();
+
+            // Importa, analiza, almacena los xmls; Crea subcarpetas y mueve los pdf y xml a su carpeta correspondiente
             a.ejecutar();
 
+            // Actualiza la lista facturas según el objeto archivos
             facturas = a.getXmlsAsfacturas();
-            establecerOrigenDgv(dgvFacturas, a.facturas_xmls);
+
+            // Actualiza los datos de dgv
+            establecerOrigenDgv(dgvFacturas, a.getXmlsAsfacturas());
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)

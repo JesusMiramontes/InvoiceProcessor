@@ -25,7 +25,8 @@ namespace ProcesarFacturasXml
         // Extensiones a buscar
         private string[] extensiones = { ".xml", ".pdf" };
 
-        public IList<Factura> facturas_xmls;
+        // Almacena las facturas con sus propiedades, lista que funciona para mostrar los datos en gdv
+        private IList<Factura> facturas_xmls;
 
         /// <summary>
         /// Constructor que inicializa en nil
@@ -141,7 +142,6 @@ namespace ProcesarFacturasXml
                     try
                     {
                         // Mueve el archivo de la ruta padre a la subcarpeta
-                        //System.Threading.Thread.Sleep(3000);
                         System.IO.File.Move(from_location, to_location);
                     }
                     catch (Exception ex)
@@ -157,19 +157,15 @@ namespace ProcesarFacturasXml
         /// Analiza los archivos, crea las carpetas, y mueve los .xml y.pdf
         /// </summary>
         public void ejecutar() {
-            //System.Threading.Thread.Sleep(3000);
-            //MessageBox.Show("Cargando archivos");
             cargarArchivos();
-
-            //System.Threading.Thread.Sleep(3000);
-            //MessageBox.Show("Comparando listas");
             compararListas();
-
-            //System.Threading.Thread.Sleep(3000);
-            //MessageBox.Show("Moviendo coinciden");
             moverCoinciden();
         }
 
+        /// <summary>
+        /// Getter facturas_xml
+        /// </summary>
+        /// <returns> Lista de facturas para mostrarse en dgv</returns>
         public IList<Factura> getXmlsAsfacturas() {
             return facturas_xmls;
         }
