@@ -87,20 +87,20 @@ namespace ProcesarFacturasXml
             {
                 // Al objeto a le asigna la ruta de la carpeta seleccionada
                 a = new Archivos(folderBrowserDialog1.SelectedPath);
+
+                // Restablece la configuración del dialogo
+                folderBrowserDialog1.Reset();
+                folderBrowserDialog1.Dispose();
+
+                // Importa, analiza, almacena los xmls; Crea subcarpetas y mueve los pdf y xml a su carpeta correspondiente
+                a.ejecutar();
+
+                // Actualiza la lista facturas según el objeto archivos
+                facturas = a.getXmlsAsfacturas();
+
+                // Actualiza los datos de dgv
+                establecerOrigenDgv(dgvFacturas, a.getXmlsAsfacturas());
             }
-
-            // Restablece la configuración del dialogo
-            folderBrowserDialog1.Reset();
-            folderBrowserDialog1.Dispose();
-
-            // Importa, analiza, almacena los xmls; Crea subcarpetas y mueve los pdf y xml a su carpeta correspondiente
-            a.ejecutar();
-
-            // Actualiza la lista facturas según el objeto archivos
-            facturas = a.getXmlsAsfacturas();
-
-            // Actualiza los datos de dgv
-            establecerOrigenDgv(dgvFacturas, a.getXmlsAsfacturas());
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)

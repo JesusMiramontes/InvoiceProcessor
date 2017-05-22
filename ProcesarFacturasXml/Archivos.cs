@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Compression;
 
 namespace ProcesarFacturasXml
 {
@@ -129,11 +130,14 @@ namespace ProcesarFacturasXml
             
             foreach (var file in coinciden)
             {
+                // Almacena la ubicación del archivo con el que se está trabajando
+                string from_location = "";
+
                 // Realiza la operacíon con cada extensión
                 for (int i = 0; i < extensiones.Length; i++)
                 {
                     // Concatena la ruta del la carpeta, el nombre del archivo y la extensión
-                    string from_location = string.Format("{0}\\{1}{2}", folder_path, file, extensiones[i]);
+                    from_location = string.Format("{0}\\{1}{2}", folder_path, file, extensiones[i]);
             
                     // Concatena la ruta de la carpeta, el nombre de la subcarpeta, el nombre del archivo, y la extensión
                     string to_location = string.Format("{0}\\{1}\\{2}{3}", folder_path, file, file, extensiones[i]);
@@ -150,6 +154,13 @@ namespace ProcesarFacturasXml
                     }
             
                 }
+
+                // Comprimir en ZIP la carpeta creada que ya contiene los archivos
+                string current_working_folder = folder_path + "\\" + System.IO.Path.GetFileNameWithoutExtension(from_location);
+                ZipFile.CreateFromDirectory(current_working_folder, current_working_folder+".zip");
+
+                // Elimina la carpeta despues de comprimirla
+                Directory.Delete(current_working_folder, true);
             }
         }
 
