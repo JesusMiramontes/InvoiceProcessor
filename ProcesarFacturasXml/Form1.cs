@@ -26,11 +26,25 @@ namespace ProcesarFacturasXml
         /// </summary>
         /// <param name="file_path">Ruta del archivo a procesar</param>
         static void agregarArchivoALista(string file_path) {
-            //Crea una factura f con la factura que recibe del xml
-            Factura f = Factura.readFromXmlFile(file_path);
+            bool valid_file = true;
+            Factura f = new Factura();
 
-            //Agrega la factura f a la lista "facturas"
-            facturas.Add(f);
+            //Crea una factura f con la factura que recibe del xml
+            try
+            {
+                f = Factura.readFromXmlFile(file_path);
+            }
+            catch (Exception)
+            {
+                valid_file = false;
+            }
+
+            if (valid_file)
+            {
+                //Agrega la factura f a la lista "facturas"
+                facturas.Add(f);
+            }
+            
         }
 
         /// <summary>

@@ -54,21 +54,27 @@ namespace ProcesarFacturasXml
             //Crea un objeto capaz de leer archivos xml
             XmlReader reader = XmlReader.Create(file_path);
 
+            bool valid_file = false;
+
             while (reader.Read())
             {
                 //Busca los atributos total y fecha que se encuentan en cfdi:comprobante
                 if ((reader.NodeType == XmlNodeType.Element) && reader.Name == "cfdi:Comprobante")
                 {
-                    if (reader.HasAttributes) {
+                    if (reader.HasAttributes)
+                    {
                         f.total = reader.GetAttribute("total");
                         f.fecha = formatoFecha(reader.GetAttribute("fecha"));
+                        valid_file = true;
                     }
                     else
+                    {
                         throw new Exception("No ha sido posible procesar la información.");
+                    }
                 }
 
                 //Busca el atributo nombre que se encuentan en cfdi:Emisor
-                else if ((reader.NodeType == XmlNodeType.Element) && reader.Name == "cfdi:Emisor")
+                else if (valid_file && (reader.NodeType == XmlNodeType.Element) && reader.Name == "cfdi:Emisor")
                 {
                     if (reader.HasAttributes)
                     {
@@ -79,7 +85,7 @@ namespace ProcesarFacturasXml
                         throw new Exception("No ha sido posible procesar la información.");
                 }
 
-                else if ((reader.NodeType == XmlNodeType.Element) && reader.Name == "cfdi:Receptor")
+                else if (valid_file && (reader.NodeType == XmlNodeType.Element) && reader.Name == "cfdi:Receptor")
                 {
                     if (reader.HasAttributes)
                     {
@@ -88,6 +94,10 @@ namespace ProcesarFacturasXml
                     }
                     else
                         throw new Exception("No ha sido posible procesar la información.");
+                }
+                else
+                {
+                    //throw new Exception("No es un CDFI válido: " + file_path);
                 }
             }
 
@@ -144,6 +154,8 @@ namespace ProcesarFacturasXml
         }
 
         public static string formatoFecha(string f) {
+            if (f == null)
+                return null;
             DateTime date = DateTime.Parse(f);
             return String.Format("{0:dd/MM/yy}", date);
         }
