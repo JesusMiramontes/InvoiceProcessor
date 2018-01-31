@@ -11,14 +11,22 @@ namespace ProcesarFacturasXml
     class Factura
     {
         public string total { get; set; }
-        public string emisor { get; set; }
         public string fecha { get; set; }
+
+        // Datos emisor
+        public string emisor_razon_social { get; set; }
+        public string emisor_rfc { get; set; }
+
+        // Datos receptor
+        public string receptor_razon_social { get; set; }
+        public string receptor_rfc { get; set; }
 
         /// <summary>
         /// Constructor de factura que inicializa los valores en nil
         /// </summary>
         public Factura() {
-            total = emisor = fecha = "nil";
+            total = fecha = emisor_razon_social = emisor_rfc =
+                receptor_razon_social = receptor_rfc = "nil";
         }
 
         /// <summary>
@@ -29,7 +37,7 @@ namespace ProcesarFacturasXml
         /// <param name="f">Fecha</param>
         public Factura(string t, string e, string f) {
             total = t;
-            emisor = e;
+            emisor_razon_social = e;
             fecha = formatoFecha(f);
         }
 
@@ -64,12 +72,23 @@ namespace ProcesarFacturasXml
                 {
                     if (reader.HasAttributes)
                     {
-                        f.emisor = reader.GetAttribute("nombre");
+                        f.emisor_razon_social = reader.GetAttribute("nombre");
+                        f.emisor_rfc = reader.GetAttribute("rfc");
                     }
                     else
                         throw new Exception("No ha sido posible procesar la información.");
                 }
 
+                else if ((reader.NodeType == XmlNodeType.Element) && reader.Name == "cfdi:Receptor")
+                {
+                    if (reader.HasAttributes)
+                    {
+                        f.receptor_razon_social = reader.GetAttribute("nombre");
+                        f.receptor_rfc = reader.GetAttribute("rfc");
+                    }
+                    else
+                        throw new Exception("No ha sido posible procesar la información.");
+                }
             }
 
             reader.Close();
@@ -84,7 +103,7 @@ namespace ProcesarFacturasXml
         /// <returns>string separado por comas</returns>
         public string aCsv() {
             //Cadena interpolada que separa los atributos de la factura con ','
-            return $"{fecha};{emisor};{total}";
+            return $"{fecha};{emisor_razon_social};{total}";
         }
 
 
