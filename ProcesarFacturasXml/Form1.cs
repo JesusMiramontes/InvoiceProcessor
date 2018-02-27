@@ -16,6 +16,9 @@ namespace ProcesarFacturasXml
         // Lista que almacena las facturas importadas
         static IList<Factura> facturas = new List<Factura>();
 
+        // Manejador de archivos
+        public static Archivos a;
+
         public Form1()
         {
             InitializeComponent();
@@ -48,19 +51,6 @@ namespace ProcesarFacturasXml
         }
 
         /// <summary>
-        /// Actualiza el origen del datagridview
-        /// </summary>
-        /// <param name="dgv">Datagridview al que se le asignará el origen</param>
-        /// <param name="lista">Lista con las facturas</param>
-        static void establecerOrigenDgv(DataGridView dgv, IList<Factura> lista) {
-            // Establece el origen a null
-            dgv.DataSource = null;
-
-            //Establece la lista facturas como el origen del dgv
-            dgv.DataSource = lista;
-        }
-
-        /// <summary>
         /// Copia el contenido que reciba al portapapeles
         /// </summary>
         /// <param name="s"> texto a almacenar en portapapeles</param>
@@ -79,7 +69,7 @@ namespace ProcesarFacturasXml
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 agregarArchivoALista(openFileDialog1.FileName);
-                establecerOrigenDgv(dgvFacturas, facturas);
+                Archivos.establecerOrigenDgv(dgvFacturas, facturas);
             }
         }
 
@@ -94,7 +84,7 @@ namespace ProcesarFacturasXml
             facturas = new List<Factura>();
 
             // Crea un objeto de archivos
-            Archivos a = new Archivos();
+            a = new Archivos();
 
             // Se muestra el dialogo y compara la selección del usuario
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
@@ -113,7 +103,7 @@ namespace ProcesarFacturasXml
                 facturas = a.getXmlsAsfacturas();
 
                 // Actualiza los datos de dgv
-                establecerOrigenDgv(dgvFacturas, a.getXmlsAsfacturas());
+                Archivos.establecerOrigenDgv(dgvFacturas, a.getXmlsAsfacturas());
             }
         }
 
@@ -135,6 +125,12 @@ namespace ProcesarFacturasXml
         private void timer1_Tick(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Refactorizar r = new Refactorizar();
+            r.Show();
         }
     }
 }

@@ -16,3 +16,14 @@ D:\Documentos\#J\JM\Projects\personal-2017-procesadordefacturas\ProcesarFacturas
 D:\Documentos\#J\JM\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.Form1.resources
 D:\Documentos\#J\JM\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.Properties.Resources.resources
 D:\Documentos\#J\JM\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.csproj.GenerateResource.Cache
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\bin\Debug\ProcesarFacturasXml.exe.config
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\bin\Debug\ProcesarFacturasXml.exe
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\bin\Debug\ProcesarFacturasXml.pdb
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.csprojResolveAssemblyReference.cache
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.Form1.resources
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.Properties.Resources.resources
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.csproj.GenerateResource.Cache
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.csproj.CoreCompileInputs.cache
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.exe
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.pdb
+C:\Users\jesus\Documents\Visual Studio 2017\Projects\personal-2017-procesadordefacturas\ProcesarFacturasXml\obj\Debug\ProcesarFacturasXml.Refactorizar.resources

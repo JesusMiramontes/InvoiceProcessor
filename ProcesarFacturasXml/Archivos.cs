@@ -9,10 +9,10 @@ using System.IO.Compression;
 
 namespace ProcesarFacturasXml
 {
-    class Archivos
+    public class Archivos
     {
         // Lista con los pdf encontrados
-        private IList<string> pdfs;
+        public IList<string> pdfs;
 
         // Lista con los xmls encontrados
         private IList<string> xmls;
@@ -21,13 +21,13 @@ namespace ProcesarFacturasXml
         private IList<string> coinciden;
 
         // Ruta de la carpeta sobre la que se buscarán archivos y analizarán
-        private string folder_path;
+        public string folder_path;
 
         // Extensiones a buscar
         private string[] extensiones = { ".xml", ".pdf" };
 
         // Almacena las facturas con sus propiedades, lista que funciona para mostrar los datos en gdv
-        private IList<Factura> facturas_xmls;
+        public IList<Factura> facturas_xmls;
 
         /// <summary>
         /// Constructor que inicializa en nil
@@ -76,7 +76,7 @@ namespace ProcesarFacturasXml
                 } 
             }
         }
-
+        
         /// <summary>
         /// Compara ambas lista en busca de archivos que existan en ambos formatos
         /// </summary>
@@ -86,25 +86,31 @@ namespace ProcesarFacturasXml
             //int limite = (pdfs.Count >= xmls.Count) ? pdfs.Count : xmls.Count;
 
             // Recorre la lista mas grande y la compara con la mas chica, si coincide en ambas listas la agrega a la correspondiente
+                // Copia las listas ya que serán modificadas
+            IList<string> pdfs_copy = new List<string>(pdfs);
+            IList<string> xmls_copy = new List<string>(xmls);
+
                 if (pdfs.Count > xmls.Count)
                 {
-                    foreach (var item in pdfs)
+                    foreach (var item in pdfs_copy)
                     {
                         if (xmls.Contains(item))
                         {
                             coinciden.Add(item);
+                            pdfs.RemoveAt(pdfs.IndexOf(item));
                         }
                     }
                 }
                 else
                 {
-                    foreach (var item in xmls)
+                    foreach (var item in xmls_copy)
                     {
                         if (xmls.Contains(item))
                         {
                             coinciden.Add(item);
-                        }
+                            xmls.RemoveAt(pdfs.IndexOf(item));
                     }
+                }
                 }   
             
         }
@@ -179,6 +185,34 @@ namespace ProcesarFacturasXml
         /// <returns> Lista de facturas para mostrarse en dgv</returns>
         public IList<Factura> getXmlsAsfacturas() {
             return facturas_xmls;
+        }
+
+        /// <summary>
+        /// Actualiza el origen del datagridview
+        /// </summary>
+        /// <param name="dgv">Datagridview al que se le asignará el origen</param>
+        /// <param name="lista">Lista con las facturas</param>
+        public static void establecerOrigenDgv(DataGridView dgv, IList<Factura> lista)
+        {
+            // Establece el origen a null
+            dgv.DataSource = null;
+
+            //Establece la lista facturas como el origen del dgv
+            dgv.DataSource = lista;
+        }
+
+        /// <summary>
+        /// Actualiza el origen del datagridview
+        /// </summary>
+        /// <param name="dgv">Datagridview al que se le asignará el origen</param>
+        /// <param name="lista">Lista con las facturas</param>
+        public static void establecerOrigenDgv(DataGridView dgv, IList<string> lista)
+        {
+            // Establece el origen a null
+            dgv.DataSource = null;
+
+            //Establece la lista facturas como el origen del dgv
+            dgv.DataSource = lista;
         }
 
     }

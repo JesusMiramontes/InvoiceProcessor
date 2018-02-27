@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace ProcesarFacturasXml
 {
-    class Factura
+    public class Factura
     {
         public string total { get; set; }
         public string fecha { get; set; }
