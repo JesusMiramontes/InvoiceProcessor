@@ -208,11 +208,10 @@ namespace ProcesarFacturasXml
         /// <param name="lista">Lista con las facturas</param>
         public static void establecerOrigenDgv(DataGridView dgv, IList<string> lista)
         {
-            // Establece el origen a null
-            dgv.DataSource = null;
-
-            //Establece la lista facturas como el origen del dgv
-            dgv.DataSource = lista;
+            foreach (var i in lista)
+            {
+                dgv.Rows.Add(i);
+            }
         }
 
     }

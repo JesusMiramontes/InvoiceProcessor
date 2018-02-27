@@ -31,6 +31,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvXmls = new System.Windows.Forms.DataGridView();
             this.dgvPdfs = new System.Windows.Forms.DataGridView();
+            this.nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvXmls)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPdfs)).BeginInit();
             this.SuspendLayout();
@@ -57,11 +58,20 @@
             // 
             this.dgvPdfs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvPdfs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPdfs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nombre});
             this.dgvPdfs.Dock = System.Windows.Forms.DockStyle.Right;
             this.dgvPdfs.Location = new System.Drawing.Point(498, 40);
             this.dgvPdfs.Name = "dgvPdfs";
             this.dgvPdfs.Size = new System.Drawing.Size(497, 221);
             this.dgvPdfs.TabIndex = 4;
+            // 
+            // nombre
+            // 
+            this.nombre.HeaderText = "Nombre";
+            this.nombre.Name = "nombre";
+            this.nombre.ReadOnly = true;
+            this.nombre.Width = 69;
             // 
             // Refactorizar
             // 
@@ -83,5 +93,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dgvXmls;
         private System.Windows.Forms.DataGridView dgvPdfs;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nombre;
     }
 }
